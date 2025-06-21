@@ -1,0 +1,123 @@
+import React, {useState, useRef, useEffect } from 'react'
+import { Chess } from "chess.js";
+import PuzzleChessboard from './PuzzleChessboard';
+import useLichessAPI from '../hooks/useLichessAPI';
+
+
+export default function ChessLogicLayer () {
+
+    const getPuzzle: any = useLichessAPI()
+
+    const [puzzle, setPuzzle] = useState(new Chess());
+    const [correctSequence, setCorrectSequence] = useState([])
+    const [moveNumber, setMoveNumber] = useState(0)
+    const puzzleRef = useRef(puzzle)
+
+    useEffect(() => {
+        puzzleRef.current = puzzle        
+    }, [puzzle])
+
+    const safePuzzleMutate = (gameModification: any) => {
+
+        setPuzzle(g => {
+            const update = new Chess(g.fen())
+            gameModification(update)
+            return update
+        })
+    }
+
+    const validateMove = (move: any) => {
+      if (move === null || (move.from+move.to) != correctSequence[moveNumber]) {
+        console.log('made it here 3')
+        console.log(puzzle)
+        
+        return false
+      } else { return move }    
+    }
+
+    const handleMove = (
+      sourceSquare: string, 
+      targetSquare: string,
+      piece: string
+      ) => {
+
+        const puzzleCopy = new Chess(puzzle.fen())
+
+        const moveAttributes : {
+          from: string, to: string, promotion: any
+        } = {
+          from: sourceSquare,
+          to: targetSquare,
+          promotion: piece[0].toLowerCase() === 'p' ? 'q' : null          
+        }
+
+        const move = puzzleCopy.move(moveAttributes)
+
+        console.log('made it here 1')
+
+        if (!validateMove(move)) return false
+
+        console.log('made it here 3')
+
+
+        setPuzzle(puzzleCopy)
+        moveForOpponent()        
+        setMoveNumber(moveNumber+2)
+
+        return true
+
+    }
+
+    const moveForOpponent = () => {
+      const currentPuzzle = puzzleRef.current
+      const newMoveNumber = moveNumber + 1
+      const possibleMoves = currentPuzzle.moves({verbose: true})
+      if (currentPuzzle.isGameOver() || 
+      currentPuzzle.isDraw() || 
+      possibleMoves.length === 0 ||
+      newMoveNumber >= correctSequence.length){
+        return 
+      } else {
+        safePuzzleMutate(puzzle => {
+          puzzle.move(correctSequence[newMoveNumber])
+        })
+      }
+    }
+
+    const loadNewPuzzle = () => {
+
+      setMoveNumber(0)
+
+      fetch('https://lichess.org/api/puzzle/d16v9')
+      .then(resp => resp.json())
+      .then(data => {
+        console.log(data)
+        safePuzzleMutate((puzzle: any) => {
+          puzzle.loadPgn(data.game.pgn)
+        })
+        setCorrectSequence(data.puzzle.solution)
+      })
+      // const loadedPuzzle = getPuzzle.fetchPuzzle()
+      // console.log(loadedPuzzle)
+      // safePuzzleMutate((puzzle: any) => {
+      //   puzzle.loadPgn(loadedPuzzle.pgn)
+      // })
+    }
+
+    console.log(correctSequence)
+    console.log(moveNumber)
+
+    return (
+      <div>
+        <PuzzleChessboard 
+          puzzle={null} 
+          handleMove={handleMove} 
+          position={puzzle.fen()} />
+        <button onClick={() => loadNewPuzzle()}>
+          TEST
+        </button>
+      </div>
+    )
+
+
+}
