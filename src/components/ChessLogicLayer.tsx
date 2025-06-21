@@ -78,7 +78,7 @@ export default function ChessLogicLayer () {
       newMoveNumber >= correctSequence.length){
         return 
       } else {
-        safePuzzleMutate(puzzle => {
+        safePuzzleMutate((puzzle: any) => {
           puzzle.move(correctSequence[newMoveNumber])
         })
       }
