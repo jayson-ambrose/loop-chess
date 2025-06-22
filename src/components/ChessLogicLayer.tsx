@@ -24,9 +24,6 @@ export default function ChessLogicLayer () {
 
     const validateMove = (move: any) => {
       if (move === null || (move.from+move.to) != correctSequence[moveNumber]) {
-        console.log('made it here 3')
-        console.log(puzzle)
-        
         return false
       } else { return move }    
     }
@@ -49,12 +46,7 @@ export default function ChessLogicLayer () {
 
         const move = puzzleCopy.move(moveAttributes)
 
-        console.log('made it here 1')
-
         if (!validateMove(move)) return false
-
-        console.log('made it here 3')
-
 
         setPuzzle(puzzleCopy)
         moveForOpponent()        
@@ -87,16 +79,12 @@ export default function ChessLogicLayer () {
       fetch('https://lichess.org/api/puzzle/d16v9')
       .then(resp => resp.json())
       .then(data => {
-        console.log(data)
         safePuzzleMutate((puzzle: any) => {
           puzzle.loadPgn(data.game.pgn)
         })
         setCorrectSequence(data.puzzle.solution)
       })
     }
-
-    console.log(correctSequence)
-    console.log(moveNumber)
 
     return (
       <div>
