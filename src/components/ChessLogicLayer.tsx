@@ -1,12 +1,8 @@
-import React, {useState, useRef, useEffect } from 'react'
+import {useState, useRef, useEffect } from 'react'
 import { Chess } from "chess.js";
 import PuzzleChessboard from './PuzzleChessboard';
-import useLichessAPI from '../hooks/useLichessAPI';
-
 
 export default function ChessLogicLayer () {
-
-    const getPuzzle: any = useLichessAPI()
 
     const [puzzle, setPuzzle] = useState(new Chess());
     const [correctSequence, setCorrectSequence] = useState([])
@@ -97,11 +93,6 @@ export default function ChessLogicLayer () {
         })
         setCorrectSequence(data.puzzle.solution)
       })
-      // const loadedPuzzle = getPuzzle.fetchPuzzle()
-      // console.log(loadedPuzzle)
-      // safePuzzleMutate((puzzle: any) => {
-      //   puzzle.loadPgn(loadedPuzzle.pgn)
-      // })
     }
 
     console.log(correctSequence)
