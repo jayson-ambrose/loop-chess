@@ -1,8 +1,8 @@
-export default function PuzzleListItem ({ puzzleCode, activePuzzle=true } : {
-    puzzleCode: string
-    activePuzzle: boolean }) {
+export default function PuzzleListItem ({ puzzleCode, activePuzzle=false } : {
+    puzzleCode: string,
+    activePuzzle?: boolean }) {
 
-    return(
+    return (
         <>
         <h1 className={`cursor-pointer select-none`}>{puzzleCode}</h1>
         </>

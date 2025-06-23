@@ -4,15 +4,15 @@ import PuzzleListItem from "./PuzzleListItem"
 
 export default function PuzzleList () {
 
-    const [mappedPuzzles, setMappedPuzzles] = useState([])
+    const [mappedPuzzles, setMappedPuzzles] = useState<string[]>([])
 
     const handleMapPuzzles = (text: string) => {
-        setMappedPuzzles(text.split(',', 10))
+        const result: string[] = text.split(',', 10)
+        setMappedPuzzles(result)
     }
 
-    console.log(mappedPuzzles)
-
-    const displayPuzzles = mappedPuzzles.map((puzzle) => <PuzzleListItem key={puzzle} puzzleCode={puzzle}/>)
+    const displayPuzzles = mappedPuzzles.map((puzzle) => {
+        return <PuzzleListItem key={puzzle} puzzleCode={puzzle}/>})
 
     return (
         <div className="flex flex-col">

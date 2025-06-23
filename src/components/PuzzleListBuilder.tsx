@@ -15,7 +15,8 @@ export default function PuzzleListBuilder ({ handleMapPuzzles }: {handleMapPuzzl
             value={textValue}
             placeholder="Enter up to 10 puzzle codes delineated by commas..." 
             className="border-2 border-slate-400 resize-none w-148 rounded-lg p-1" 
-            onChange={(e) => handleChange(e)}/>
+            onChange={(e) => handleChange(e)}
+            spellCheck='false'/>
         <button 
             className="border-2 rounded-lg bg-blue-400 text-white hover:bg-blue-200"
             onClick={() => {handleMapPuzzles(textValue)}}>

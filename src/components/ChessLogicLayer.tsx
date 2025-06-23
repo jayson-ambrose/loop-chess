@@ -15,8 +15,8 @@ export default function ChessLogicLayer () {
 
     const safePuzzleMutate = (gameModification: any) => {
 
-        setPuzzle(g => {
-            const update = new Chess(g.fen())
+        setPuzzle(p => {
+            const update = new Chess(p.fen())
             gameModification(update)
             return update
         })
