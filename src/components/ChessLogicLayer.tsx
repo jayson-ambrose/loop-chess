@@ -1,14 +1,11 @@
-import React, {useState, useRef, useEffect } from 'react'
+import {useState, useRef, useEffect } from 'react'
 import { Chess } from "chess.js";
 import PuzzleChessboard from './PuzzleChessboard';
-import useLichessAPI from '../hooks/useLichessAPI';
-
+import { usePuzzleStore } from '../stores/puzzleStore';
 
 export default function ChessLogicLayer () {
-
-    const getPuzzle: any = useLichessAPI()
-
-    const [puzzle, setPuzzle] = useState(new Chess());
+    const puzzle = usePuzzleStore.puzzleData
+    const setPuzzle = usePuzzleStore.setPuzzle()
     const [correctSequence, setCorrectSequence] = useState([])
     const [moveNumber, setMoveNumber] = useState(0)
     const puzzleRef = useRef(puzzle)
@@ -28,9 +25,6 @@ export default function ChessLogicLayer () {
 
     const validateMove = (move: any) => {
       if (move === null || (move.from+move.to) != correctSequence[moveNumber]) {
-        console.log('made it here 3')
-        console.log(puzzle)
-        
         return false
       } else { return move }    
     }
@@ -53,12 +47,7 @@ export default function ChessLogicLayer () {
 
         const move = puzzleCopy.move(moveAttributes)
 
-        console.log('made it here 1')
-
         if (!validateMove(move)) return false
-
-        console.log('made it here 3')
-
 
         setPuzzle(puzzleCopy)
         moveForOpponent()        
@@ -91,21 +80,15 @@ export default function ChessLogicLayer () {
       fetch('https://lichess.org/api/puzzle/d16v9')
       .then(resp => resp.json())
       .then(data => {
-        console.log(data)
         safePuzzleMutate((puzzle: any) => {
           puzzle.loadPgn(data.game.pgn)
         })
         setCorrectSequence(data.puzzle.solution)
+        console.log(data)
       })
-      // const loadedPuzzle = getPuzzle.fetchPuzzle()
-      // console.log(loadedPuzzle)
-      // safePuzzleMutate((puzzle: any) => {
-      //   puzzle.loadPgn(loadedPuzzle.pgn)
-      // })
     }
 
-    console.log(correctSequence)
-    console.log(moveNumber)
+    console.log(puzzle)
 
     return (
       <div>
