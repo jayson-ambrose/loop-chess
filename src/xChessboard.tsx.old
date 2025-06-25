@@ -5,14 +5,7 @@ import { Chessboard } from "react-chessboard";
 export default function ChessboardSample() {
   const [game, setGame] = useState(new Chess());
   const gameRef = useRef(game); // Use a ref to hold the current game instance
-  const [currentTimeout, setCurrentTimeout] = useState<NodeJS.Timeout>();
-
-  const getStartingFEN = () => { 
-    fetch('https://lichess.org/api/puzzle/BkRiz')
-    .then( resp => resp.json())
-    .then( data => {console.log(data)})
-        
-  }
+  const [currentTimeout, setCurrentTimeout] = useState<NodeJS.Timeout>()
 
   // Update the ref whenever the game state changes
   useEffect(() => {
@@ -79,8 +72,6 @@ export default function ChessboardSample() {
 
     return true;
   }
-
-  console.log(game)
 
   return (
     <div>
