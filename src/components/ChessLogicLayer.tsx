@@ -1,11 +1,13 @@
 import {useState, useRef, useEffect } from 'react'
 import { Chess } from "chess.js";
 import PuzzleChessboard from './PuzzleChessboard';
-import { usePuzzleStore } from '../stores/puzzleStore';
 
 export default function ChessLogicLayer () {
-    const puzzle = usePuzzleStore.puzzleData
-    const setPuzzle = usePuzzleStore.setPuzzle()
+    // const puzzle = usePuzzleStore((state)=> state.puzzleData)
+    // const setPuzzle = usePuzzleStore((state) => state.setPuzzle)
+
+    const [puzzle, setPuzzle] = useState(() => new Chess())
+
     const [correctSequence, setCorrectSequence] = useState([])
     const [moveNumber, setMoveNumber] = useState(0)
     const puzzleRef = useRef(puzzle)
@@ -16,7 +18,7 @@ export default function ChessLogicLayer () {
 
     const safePuzzleMutate = (gameModification: any) => {
 
-        setPuzzle(g => {
+        setPuzzle((g) => {
             const update = new Chess(g.fen())
             gameModification(update)
             return update
