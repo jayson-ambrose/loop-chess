@@ -3,8 +3,11 @@ import { Chess } from "chess.js";
 import PuzzleChessboard from './PuzzleChessboard';
 
 export default function ChessLogicLayer () {
+    // const puzzle = usePuzzleStore((state)=> state.puzzleData)
+    // const setPuzzle = usePuzzleStore((state) => state.setPuzzle)
 
-    const [puzzle, setPuzzle] = useState(new Chess());
+    const [puzzle, setPuzzle] = useState(() => new Chess())
+
     const [correctSequence, setCorrectSequence] = useState([])
     const [moveNumber, setMoveNumber] = useState(0)
     const puzzleRef = useRef(puzzle)
@@ -15,8 +18,8 @@ export default function ChessLogicLayer () {
 
     const safePuzzleMutate = (gameModification: any) => {
 
-        setPuzzle(p => {
-            const update = new Chess(p.fen())
+        setPuzzle((g) => {
+            const update = new Chess(g.fen())
             gameModification(update)
             return update
         })
@@ -83,8 +86,11 @@ export default function ChessLogicLayer () {
           puzzle.loadPgn(data.game.pgn)
         })
         setCorrectSequence(data.puzzle.solution)
+        console.log(data)
       })
     }
+
+    console.log(puzzle)
 
     return (
       <div>
