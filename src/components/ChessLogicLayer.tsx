@@ -1,10 +1,13 @@
 import {useState, useRef, useEffect } from 'react'
 import { Chess } from "chess.js";
 import PuzzleChessboard from './PuzzleChessboard';
+import { useChess } from '../hooks/useChess';
 
 export default function ChessLogicLayer () {
     // const puzzle = usePuzzleStore((state)=> state.puzzleData)
     // const setPuzzle = usePuzzleStore((state) => state.setPuzzle)
+
+    const gameRules = useChess()
 
     const [puzzle, setPuzzle] = useState(() => new Chess())
 
@@ -25,11 +28,40 @@ export default function ChessLogicLayer () {
         })
     }
 
-    const validateMove = (move: any) => {
-      if (move === null || (move.from+move.to) != correctSequence[moveNumber]) {
-        return false
-      } else { return move }    
-    }
+    // const validateMove = (move: any) => {
+    //   if (move === null || (move.from+move.to) != correctSequence[moveNumber]) {
+    //     return false
+    //   } else { return move }    
+    // }
+
+    // const handleMove = (
+
+    //   sourceSquare: string, 
+    //   targetSquare: string,
+    //   piece: string
+    //   ) => {
+
+    //     const puzzleCopy = new Chess(puzzle.fen())
+
+    //     const moveAttributes : {
+    //       from: string, to: string, promotion: any
+    //     } = {
+    //       from: sourceSquare,
+    //       to: targetSquare,
+    //       promotion: piece[0].toLowerCase() === 'p' ? 'q' : null          
+    //     }
+
+    //     const move = puzzleCopy.move(moveAttributes)
+
+    //     if (!validateMove(move)) return false
+
+    //     setPuzzle(puzzleCopy)
+    //     moveForOpponent()        
+    //     setMoveNumber(moveNumber+2)
+
+    //     return true
+
+    // }
 
     const handleMove = (
       sourceSquare: string, 
@@ -37,26 +69,11 @@ export default function ChessLogicLayer () {
       piece: string
       ) => {
 
-        const puzzleCopy = new Chess(puzzle.fen())
-
-        const moveAttributes : {
-          from: string, to: string, promotion: any
-        } = {
-          from: sourceSquare,
-          to: targetSquare,
-          promotion: piece[0].toLowerCase() === 'p' ? 'q' : null          
+        const move = {
+          sourceSquare, targetSquare, piece
         }
 
-        const move = puzzleCopy.move(moveAttributes)
-
-        if (!validateMove(move)) return false
-
-        setPuzzle(puzzleCopy)
-        moveForOpponent()        
-        setMoveNumber(moveNumber+2)
-
-        return true
-
+      setPuzzle(gameRules.makeMove(move, puzzle))  
     }
 
     const moveForOpponent = () => {
