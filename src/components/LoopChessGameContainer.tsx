@@ -1,11 +1,11 @@
-import ChessLogicLayer from "./ChessLogicLayer";
+import PuzzleChessboard from "./PuzzleChessboard";
 import PuzzleList from "./PuzzleList";
 
 export default function LoopChessGameContainer () {
 
     return (
         <div className="flex flex-row">            
-            <ChessLogicLayer/>
+            <PuzzleChessboard position={null} puzzle={null}/>
             <PuzzleList/>
         </div>
     )

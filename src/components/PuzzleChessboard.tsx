@@ -9,7 +9,7 @@ export default function PuzzleChessboard ({ position }:
         position: any}) {
 
     const gameRules = useChess()
-    const [puzzle, setPuzzle] = useState(()=> new Chess())
+    const [board, setBoard] = useState(()=> new Chess())
     
     const handleMove = (
 
@@ -22,7 +22,7 @@ export default function PuzzleChessboard ({ position }:
           sourceSquare, targetSquare, piece
         }
 
-      setPuzzle(gameRules.makeMove(move, puzzle))
+      setBoard(gameRules.makeMove(move, board))
       
       return true
     }
@@ -32,7 +32,7 @@ export default function PuzzleChessboard ({ position }:
             <Chessboard
                 onPieceDrop={(sourceSquare, targetSquare, piece) => 
                     handleMove(sourceSquare, targetSquare, piece) }
-                position={puzzle.fen()} 
+                position={board.fen()} 
                 animationDuration={50}/>
         </div>
     )
