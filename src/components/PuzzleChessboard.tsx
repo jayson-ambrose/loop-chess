@@ -3,13 +3,11 @@ import { useChess } from "../hooks/useChess";
 import { useState } from "react";
 import { Chess } from "chess.js";
 
-export default function PuzzleChessboard ({ position }: 
-    {
-        puzzle: any, 
-        position: any}) {
+export default function PuzzleChessboard ({position=null, puzzle=null}: 
+  {position: string | null, puzzle: any | null}) {
 
-    const gameRules = useChess()
-    const [board, setBoard] = useState(()=> new Chess())
+    const gameFunctions = useChess()
+    const [board, setBoard] = useState(position ? new Chess(position) : new Chess())
     
     const handleMove = (
 
@@ -22,7 +20,7 @@ export default function PuzzleChessboard ({ position }:
           sourceSquare, targetSquare, piece
         }
 
-      setBoard(gameRules.makeMove(move, board))
+      setBoard(gameFunctions.makeMove(move, board))
       
       return true
     }
