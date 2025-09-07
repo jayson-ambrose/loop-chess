@@ -1,12 +1,12 @@
 import './App.css'
-import LoopChessGameContainer from './components/LoopChessGameContainer'
+import LoopChessPuzzleContainer from './components/LoopChessPuzzleContainer'
 
 
 function App() {
 
     return (
     <>
-      <LoopChessGameContainer/>
+      <LoopChessPuzzleContainer/>
     </>
   )
 }

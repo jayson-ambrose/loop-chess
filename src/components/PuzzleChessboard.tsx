@@ -1,15 +1,20 @@
 import { Chessboard } from "react-chessboard";
 import { useChess } from "../hooks/useChess";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Chess } from "chess.js";
 
-export default function PuzzleChessboard ({ position }: 
-    {
-        puzzle: any, 
-        position: any}) {
+export default function PuzzleChessboard ({
+  position, 
+  puzzle=null}: 
+  {position: string, puzzle: any | null}) {
 
-    const gameRules = useChess()
-    const [puzzle, setPuzzle] = useState(()=> new Chess())
+    const gameFunctions = useChess()
+    const [board, setBoard] = useState(new Chess())
+    
+    useEffect(() => {
+
+      position ? setBoard(new Chess(position)) : setBoard(new Chess())
+    }, [position])
     
     const handleMove = (
 
@@ -22,7 +27,7 @@ export default function PuzzleChessboard ({ position }:
           sourceSquare, targetSquare, piece
         }
 
-      setPuzzle(gameRules.makeMove(move, puzzle))
+      setBoard(gameFunctions.makeMove(move, board))
       
       return true
     }
@@ -32,7 +37,7 @@ export default function PuzzleChessboard ({ position }:
             <Chessboard
                 onPieceDrop={(sourceSquare, targetSquare, piece) => 
                     handleMove(sourceSquare, targetSquare, piece) }
-                position={puzzle.fen()} 
+                position={board.fen()} 
                 animationDuration={50}/>
         </div>
     )

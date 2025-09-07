@@ -1,10 +1,13 @@
-export default function PuzzleListItem ({ puzzleCode, activePuzzle=false } : {
+export default function PuzzleListItem ({ puzzleCode, activePuzzle=false, handleChangeCurrentPuzzle } : {
     puzzleCode: string,
-    activePuzzle?: boolean }) {
+    activePuzzle?: boolean
+    handleChangeCurrentPuzzle: (puzzleCode: string) => void}) {
 
     return (
         <>
-        <h1 className={`cursor-pointer select-none`}>{puzzleCode}</h1>
+        <h1 onClick={()=> {
+            handleChangeCurrentPuzzle(puzzleCode)
+        }} className={`cursor-pointer select-none`}>{puzzleCode}</h1>
         </>
     )
 }
