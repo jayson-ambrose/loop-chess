@@ -1,13 +1,20 @@
 import { Chessboard } from "react-chessboard";
 import { useChess } from "../hooks/useChess";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Chess } from "chess.js";
 
-export default function PuzzleChessboard ({position=null, puzzle=null}: 
-  {position: string | null, puzzle: any | null}) {
+export default function PuzzleChessboard ({
+  position, 
+  puzzle=null}: 
+  {position: string, puzzle: any | null}) {
 
     const gameFunctions = useChess()
-    const [board, setBoard] = useState(position ? new Chess(position) : new Chess())
+    const [board, setBoard] = useState(new Chess())
+    
+    useEffect(() => {
+
+      position ? setBoard(new Chess(position)) : setBoard(new Chess())
+    }, [position])
     
     const handleMove = (
 

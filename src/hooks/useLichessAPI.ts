@@ -1,4 +1,4 @@
-export default function useLichessAPI () {
+export function useLichessAPI () {
 
     const fetchPuzzle = async (puzzleCode: string) => {
 

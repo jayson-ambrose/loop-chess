@@ -1,4 +1,5 @@
 import { Chess } from "chess.js";
+import { useLichessAPI } from "./useLichessAPI";
 
 export function useChess() {
 
@@ -24,9 +25,20 @@ export function useChess() {
         validateMove(boardCopy, moveAttributes)
         
         return boardCopy
-
     }
 
-    return {makeMove, validateMove}
+    const setBoardForPuzzle = (puzzle: any) => {
+        if(puzzle === null) return new Chess()
+        return new Chess(puzzle.game.fen)
+    }
+
+    const parsePGN = (pgn: string) => {
+        const chess = new Chess()
+        chess.loadPgn(pgn)
+        return chess.fen()
+        
+    }
+
+    return {makeMove, validateMove, parsePGN, setBoardForPuzzle}
 
 }

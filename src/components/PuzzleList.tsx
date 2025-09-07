@@ -2,7 +2,9 @@ import { useState } from "react"
 import PuzzleListBuilder from "./PuzzleListBuilder"
 import PuzzleListItem from "./PuzzleListItem"
 
-export default function PuzzleList () {
+export default function PuzzleList ({handleChangeCurrentPuzzle}: {
+    handleChangeCurrentPuzzle: (puzzleCode: string) => void
+}) {
 
     const [mappedPuzzles, setMappedPuzzles] = useState<string[]>([])
 
@@ -12,7 +14,10 @@ export default function PuzzleList () {
     }
 
     const displayPuzzles = mappedPuzzles.map((puzzle) => {
-        return <PuzzleListItem key={puzzle} puzzleCode={puzzle}/>})
+        return (<PuzzleListItem 
+            key={puzzle} 
+            puzzleCode={puzzle}
+            handleChangeCurrentPuzzle={handleChangeCurrentPuzzle}/>)})
 
     return (
         <div className="flex flex-col">
