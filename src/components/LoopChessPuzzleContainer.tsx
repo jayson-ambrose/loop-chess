@@ -7,13 +7,8 @@ import { usePuzzleStore } from "../stores/puzzleStore";
 
 export default function LoopChessPuzzleContainer () {
 
-    // testing code ////////////////////////
-
     const currentPuzzle = usePuzzleStore.getState().puzzleData.puzzle
     const setCurrentPuzzle = usePuzzleStore(state => state.setPuzzle)
-
-    // testing code /////////////////////////
-
     const gameFunctions = useChess()
     const lichessAPI = useLichessAPI()
 
