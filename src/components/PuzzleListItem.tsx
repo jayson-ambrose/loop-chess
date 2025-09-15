@@ -1,4 +1,4 @@
-export default function PuzzleListItem ({ puzzleCode, activePuzzle=false, handleChangeCurrentPuzzle } : {
+export default function PuzzleListItem ({ puzzleCode, handleChangeCurrentPuzzle } : {
     puzzleCode: string,
     activePuzzle?: boolean
     handleChangeCurrentPuzzle: (puzzleCode: string) => void}) {
