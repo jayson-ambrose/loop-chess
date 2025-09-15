@@ -5,14 +5,14 @@ import { Chess } from "chess.js";
 
 export default function PuzzleChessboard ({
   position, 
-  puzzle=null}: 
-  {position: string, puzzle: any | null}) {
+  puzzle=null,
+  turn='white'}: 
+  {position: string, puzzle: any | null | undefined, turn: any}) {
 
     const gameFunctions = useChess()
     const [board, setBoard] = useState(new Chess())
     
     useEffect(() => {
-
       position ? setBoard(new Chess(position)) : setBoard(new Chess())
     }, [position])
     
@@ -38,7 +38,8 @@ export default function PuzzleChessboard ({
                 onPieceDrop={(sourceSquare, targetSquare, piece) => 
                     handleMove(sourceSquare, targetSquare, piece) }
                 position={board.fen()} 
-                animationDuration={50}/>
+                animationDuration={50}
+                boardOrientation={turn}/>
         </div>
     )
 }

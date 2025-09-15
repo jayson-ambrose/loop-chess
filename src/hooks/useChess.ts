@@ -1,5 +1,4 @@
 import { Chess } from "chess.js";
-import { useLichessAPI } from "./useLichessAPI";
 
 export function useChess() {
 
@@ -39,6 +38,16 @@ export function useChess() {
         
     }
 
-    return {makeMove, validateMove, parsePGN, setBoardForPuzzle}
+    const getTurn = (puzzleFEN: any) => {
+        const chess = new Chess(puzzleFEN)
+        return chess.turn()
+    }
+
+    return {
+        makeMove, 
+        validateMove, 
+        parsePGN, 
+        setBoardForPuzzle, 
+        getTurn}
 
 }
