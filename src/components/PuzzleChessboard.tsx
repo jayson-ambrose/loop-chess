@@ -15,6 +15,8 @@ export default function PuzzleChessboard ({
     useEffect(() => {
       position ? setBoard(new Chess(position)) : setBoard(new Chess())
     }, [position])
+
+    console.log('puzzle chessboard loaded')
     
     const handleMove = (
 
